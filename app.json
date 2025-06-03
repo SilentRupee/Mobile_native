@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "pokemon_go_web3",
+    "slug": "pokemon_go_web3",
+    "version": "1.0.0",
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "plugins": [],
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.youval21.pokemongoweb3",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.youval21.pokemongoweb3"
+    },
+    "scheme": "com.youval21.pokemongoweb3",
+    "extra": {
+      "eas": {
+        "projectId": "d45d38b6-b5a0-4792-89ce-9511be09e71f"
+      }
+    },
+    "owner": "youval21"
+  }
+}
