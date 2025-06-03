@@ -3,10 +3,20 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
-    "types": ["react-native"],
+    "types": [
+      "react-native"
+    ],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": [
+        "src/*"
+      ],
+      "@/*": [
+        "./*"
+      ],
+      "tailwind.config": [
+        "./tailwind.config.js"
+      ]
     }
   }
 }

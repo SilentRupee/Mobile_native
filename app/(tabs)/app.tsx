@@ -1,4 +1,13 @@
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Slider,
+  SliderThumb,
+  SliderTrack,
+  SliderFilledTrack,
+} from "@/components/ui/slider"
+import { Center } from "@/components/ui/center"
+import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
+import { CircleIcon } from '@/components/ui/icon';
 
 const ProfilePage = () => {
   return (
@@ -12,6 +21,14 @@ const ProfilePage = () => {
         <Text className="mt-4 text-white text-2xl font-bold">John Doe</Text>
         <Text className="text-blue-200">Software Developer</Text>
       </View>
+      <RadioGroup>
+      <Radio value="change" size="md" isInvalid={false} isDisabled={false}>
+        <RadioIndicator>
+          <RadioIcon as={CircleIcon} />
+        </RadioIndicator>
+        <RadioLabel>Labeldasd</RadioLabel>
+      </Radio>
+    </RadioGroup>
 
       {/* Stats */}
       <View className="flex-row justify-around py-4 bg-white mx-4 mt-6 rounded-lg shadow">
