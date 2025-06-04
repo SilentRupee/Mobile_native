@@ -1,10 +1,14 @@
-import { Stack } from 'expo-router';
 import { PrivyProvider } from '@privy-io/expo';
+import { SmartWalletsProvider } from '@privy-io/expo/smart-wallets';
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { useFonts } from 'expo-font';
-import { View, ActivityIndicator } from 'react-native';
+import { ReactNode } from 'react';
 
-export default function Layout() {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export default function AuthProvider({ children }: AuthProviderProps) {
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
@@ -12,11 +16,7 @@ export default function Layout() {
   });
 
   if (!fontsLoaded) {
-    return (
-      <View className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return null;
   }
 
   return (
@@ -24,9 +24,7 @@ export default function Layout() {
       appId="cmbgq970a00bnjx0ljjstea1r"
       clientId="client-WY6MAHqPQ5xinYbdJprLg3JgCGWi44fvro3fqwVp3VbRV"
     >
-      <Stack>
-        <Stack.Screen name="profile" options={{ headerShown: true }} />
-      </Stack>
+      <SmartWalletsProvider>{children}</SmartWalletsProvider>
     </PrivyProvider>
   );
 } 
