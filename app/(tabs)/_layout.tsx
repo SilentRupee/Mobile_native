@@ -1,103 +1,64 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Tabs } from "expo-router";
-import { StyleSheet, View } from "react-native";
-import '../../global.css';
+import { Tabs } from 'expo-router';
+import React from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Layout = () => {
-  // const insets = useSafeAreaInsets();
 
+export default function TabLayout() {
   return (
     <Tabs
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "index") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "wallet") {
-            iconName = focused ? "wallet" : "wallet-outline";
-          } else if (route.name === "leaderboard") {
-            iconName = focused ? "trophy" : "trophy-outline";
-          } else if (route.name === "profile") {
-            iconName = focused ? "person" : "person-outline";
-          } else if (route.name === "health") {
-            iconName = focused ? "stats-chart-outline" : "stats-chart";
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: "#6c5ce7",
-        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.7)",
-        headerShown: false,
-        tabBarShowLabel: true,
-        tabBarStyle: {
-          // position: "absolute",
-
-          left: "10%",
-          right: "10%",
-
-          backgroundColor: "#EE82EE",
-          // borderRadius: 25,
-
-          height: 65,
-
-          ...styles.shadow,
-          borderTopWidth: 0,
-        },
-        tabBarBackground: () => (
-          <View
-            style={[
-              StyleSheet.absoluteFill,
-              { backgroundColor: "rgba(26, 0, 51, 0.75)" },
-            ]}
-          />
-        ),
-        tabBarItemStyle: {
-          paddingVertical: 5,
-        },
-        tabBarLabelStyle: {
-          fontWeight: "500",
-        },
-      })}
+      screenOptions={{
+        tabBarActiveTintColor: '#ffd33d',
+      }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: 'Home',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="leaderboard"
+        name="Service"
         options={{
-          title: "Leaderboard",
+          title: 'Services',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="Stats"
+        name="Scanner"
         options={{
-          title: "Health",
+          title: '',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={28}/>
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="wallet"
+        name="Cards"
         options={{
-          title: "Wallet",
+          title: 'Cards',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+
+        <Tabs.Screen
+        name="Setting"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+          ),
         }}
       />
     </Tabs>
   );
-};
-
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
-  },
-});
-
-export default Layout;
+}
