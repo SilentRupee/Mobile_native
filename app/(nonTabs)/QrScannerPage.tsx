@@ -1,17 +1,6 @@
 "use client"
-
 import React, { useState, useRef, useEffect } from "react"
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  StatusBar,
-  SafeAreaView,
-  Animated,
-  Easing,
-} from "react-native"
+import {View,Text,TextInput,TouchableOpacity,ScrollView,StatusBar,SafeAreaView,Animated,Easing,} from "react-native"
 import { Camera, CameraView } from "expo-camera"
 import { Ionicons } from "@expo/vector-icons"
 
