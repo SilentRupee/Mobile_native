@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
-const Service = () => {
+const Service: React.FC = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Service</Text>
-    </View>
-  )
-}
+    </SafeAreaView>
+  );
+};
 
-export default Service
+export default Service;

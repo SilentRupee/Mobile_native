@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from '../../components/Screens/HomeScreen';
 
-const index : React.FC = () => {
+const Index: React.FC = () => {
     return (
     <SafeAreaProvider>
       <HomeScreen/>
@@ -10,4 +10,4 @@ const index : React.FC = () => {
   );
 };
 
-export default index
+export default Index;
