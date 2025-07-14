@@ -25,6 +25,7 @@
     "expo": "53.0.19",
     "expo-apple-authentication": "~7.2.4",
     "expo-application": "~6.1.5",
+    "expo-camera": "~16.1.10",
     "expo-constants": "~17.1.7",
     "expo-crypto": "~14.1.5",
     "expo-font": "~13.3.2",
@@ -36,6 +37,8 @@
     "expo-system-ui": "~5.0.10",
     "expo-web-browser": "~14.2.0",
     "fast-text-encoding": "^1.0.6",
+    "lottie-react-native": "7.2.2",
+    "lucide-react-native": "^0.525.0",
     "nativewind": "^4.1.23",
     "permissionless": "^0.2.47",
     "react": "19.0.0",
@@ -50,9 +53,7 @@
     "react-native-web": "^0.20.0",
     "react-native-webview": "13.13.5",
     "twrnc": "^4.9.1",
-    "viem": "^2.30.6",
-    "expo-camera": "~16.1.10",
-    "lottie-react-native": "7.2.2"
+    "viem": "^2.30.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
