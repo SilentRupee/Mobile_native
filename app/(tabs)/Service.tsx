@@ -7,7 +7,7 @@ const Service: React.FC = () => {
   return (
     <SafeAreaView>
       <Text>Service</Text>
-      <Link href={"PaymentTableScreen"}>
+      <Link href={"PaymentResultSC"}>
             <Text>hi there</Text></Link>
     </SafeAreaView>
   );
