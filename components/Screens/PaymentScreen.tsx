@@ -20,16 +20,14 @@ const PaymentScreen : React.FC = () => {
   };
 
   const handleAmountChange = (newAmount: string) => {
-    // Remove any non-numeric characters except decimal point
     const cleanAmount = newAmount.replace(/[^0-9.]/g, '');
     
-    // Ensure only one decimal point
+   
     const parts = cleanAmount.split('.');
     if (parts.length > 2) {
       return;
     }
     
-    // Limit decimal places to 2
     if (parts[1] && parts[1].length > 2) {
       return;
     }
@@ -40,7 +38,6 @@ const PaymentScreen : React.FC = () => {
   const handleAmountSubmit = () => {
     setIsEditingAmount(false);
     
-    // Validate amount
     const numericAmount = parseFloat(amount);
     if (amount && (isNaN(numericAmount) || numericAmount <= 0)) {
       Alert.alert('Invalid Amount', 'Please enter a valid amount greater than 0');
@@ -48,7 +45,6 @@ const PaymentScreen : React.FC = () => {
       return;
     }
     
-    // Format amount to 2 decimal places if it has decimal
     if (amount && amount.includes('.')) {
       const formatted = parseFloat(amount).toFixed(2);
       setAmount(formatted);
