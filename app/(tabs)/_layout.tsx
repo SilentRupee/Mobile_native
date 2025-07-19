@@ -39,7 +39,7 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: ({ color, focused }) => (
-            <MaterialIcons name="qr-code-scanner" size={24} color="black" />
+            <MaterialIcons name="qr-code-scanner" size={30} color="black" />
           ),
         }}
       />

@@ -1,8 +1,9 @@
 "use client"
 import React, { useState, useRef, useEffect } from "react"
-import {View,Text,TextInput,TouchableOpacity,ScrollView,StatusBar,SafeAreaView,Animated,Easing,} from "react-native"
+import {View,Text,TextInput,TouchableOpacity,ScrollView,StatusBar,SafeAreaView,Animated,Easing, BackHandler,} from "react-native"
 import { Camera, CameraView } from "expo-camera"
 import { Ionicons } from "@expo/vector-icons"
+import { router } from "expo-router"
 
 type QRScannerScreenProps = {}
 
@@ -24,6 +25,16 @@ export default function QRScannerScreen({}: QRScannerScreenProps) {
 
     getCameraPermissions()
   }, [])
+
+//back-navigation
+useEffect(()=>{
+  const backActionBtn=()=>{
+    router.push('/(tabs)/')
+    return true
+  }
+  const backHandler =BackHandler.addEventListener('hardwareBackPress',backActionBtn)
+  return () => backHandler.remove()
+},[])
 
   // Add this useEffect for animation
   useEffect(() => {
@@ -77,7 +88,7 @@ export default function QRScannerScreen({}: QRScannerScreenProps) {
         <View className="absolute top-6 left-0 right-0 flex-row items-center justify-between px-4">
           <View className="flex-1" />
           <Text className="text-white text-lg font-black">Scan Any QR Code</Text>
-          <TouchableOpacity className="p-2">
+          <TouchableOpacity className="p-2" onPress={() => router.push('/(tabs)/')}>
             <Ionicons name="close" size={24} color="#B0B0B0" />
           </TouchableOpacity>
         </View>

@@ -11,7 +11,6 @@ const PaymentScreen : React.FC = () => {
     const [amount, setAmount] = useState('');
   const [isEditingAmount, setIsEditingAmount] = useState(false);
   const handleBackPress = () => {
-    // Handle back navigation
     console.log('Back pressed');
   };
 
