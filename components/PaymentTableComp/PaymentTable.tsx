@@ -39,7 +39,7 @@ const PaymentTable = ({ data, selectedRows, onToggleRowSelection }: PaymentTable
   return (
     <View className="flex-1 bg-slate-50">
       {/* Header */}
-      <View className="p-5 bg-white border-b border-gray-200">
+      <View className="p-5  bg-white border-b border-gray-200">
         <Text className="text-2xl font-bold text-gray-900 mb-4">Payment Analytics</Text>
         <View className="flex-row items-center bg-gray-100 rounded-lg px-3">
           <Ionicons name="search" size={20} color="#6b7280" />

@@ -3,6 +3,7 @@
 import { ScrollView } from "react-native"
 import SummaryCard from "./SummaryCard"
 import { PaymentData } from "@/types/PaymentData"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 
 interface SummaryCardsProps {
@@ -16,6 +17,7 @@ const SummaryCards = ({ data }: SummaryCardsProps) => {
   const totalCommission = data.reduce((sum, item) => sum + item.commission, 0)
 
   return (
+    <SafeAreaView>
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
@@ -51,6 +53,7 @@ const SummaryCards = ({ data }: SummaryCardsProps) => {
         width="w-52"
       />
     </ScrollView>
+    </SafeAreaView>
   )
 }
 

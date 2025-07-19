@@ -88,7 +88,8 @@ useEffect(()=>{
         <View className="absolute top-6 left-0 right-0 flex-row items-center justify-between px-4">
           <View className="flex-1" />
           <Text className="text-white text-lg font-black">Scan Any QR Code</Text>
-          <TouchableOpacity className="p-2" onPress={() => router.push('/(tabs)/')}>
+          <TouchableOpacity className="p-2"
+           onPress={() => router.replace('/(tabs)/')} >
             <Ionicons name="close" size={24} color="#B0B0B0" />
           </TouchableOpacity>
         </View>

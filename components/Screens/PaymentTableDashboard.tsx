@@ -183,7 +183,8 @@ const PaymentDashboard = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
-        <DashboardHeader searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        {/* <DashboardHeader searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> */}
+        
         <SummaryCards data={filteredData} />
         <PaymentTable data={filteredData} selectedRows={selectedRows} onToggleRowSelection={toggleRowSelection} />
       </ScrollView>
