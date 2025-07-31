@@ -13,20 +13,15 @@ export default function QRScannerScreen({}: QRScannerScreenProps) {
   const [torchOn, setTorchOn] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState("")
   const [animationError, setAnimationError] = useState(false)
-
-  // Add this to your component state
   const scanAnimation = useRef(new Animated.Value(0)).current
-
   React.useEffect(() => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync()
       setHasPermission(status === "granted")
     }
-
     getCameraPermissions()
   }, [])
 
-//back-navigation
 useEffect(()=>{
   const backActionBtn=()=>{
     router.push('/(tabs)/')
@@ -36,7 +31,7 @@ useEffect(()=>{
   return () => backHandler.remove()
 },[])
 
-  // Add this useEffect for animation
+
   useEffect(() => {
     const startAnimation = () => {
       Animated.loop(

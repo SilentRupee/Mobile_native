@@ -70,7 +70,7 @@ const LoginWithLeftBackground = () => {
       console.log("Server is responsive.");
 
      
-      const response = await axios.post(`${BACKEND_URL}/api/auth/login`, {
+      const response = await axios.post(`${BACKEND_URL}/api/customer/login`, {
         email: data.email,
         password: data.password,
       });
@@ -85,7 +85,7 @@ const LoginWithLeftBackground = () => {
       console.log("Decoded Token:", decoded);
 
       // Navigate to the merchant tab
-      router.replace("/(tabs)/(merchant)");
+      router.replace("/(tabs)/(customer)");
 
       // Show success message
       toast.show({
@@ -151,7 +151,7 @@ const LoginWithLeftBackground = () => {
           <Heading className="md:text-center" size="3xl">
             Sign in
           </Heading>
-          <Text>Sign in to your Silentrupee account  Merchant</Text>
+          <Text>Sign in to your Silentrupee account Customer</Text>
         </VStack>
       </VStack>
       <VStack className="w-full">
@@ -263,14 +263,23 @@ const LoginWithLeftBackground = () => {
             <ButtonIcon as={GoogleIcon} />
           </Button>
         </VStack>
-          <Button onPress={()=>{router.push("/(auth)/customerlogin")}}>
-            <Text>Wallet</Text></Button>
+        <HStack className="self-center" space="sm">
+          <Text size="md">Don't have an account?</Text>
+          <Link href="/auth/signup">
+            <LinkText
+              className="font-medium text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700"
+              size="md"
+            >
+              Sign up
+            </LinkText>
+          </Link>
+        </HStack>
       </VStack>
     </VStack>
   );
 };
 
-export const Login = () => {
+export const CustomerLogin = () => {
   return (
     <AuthLayout>
       <LoginWithLeftBackground />

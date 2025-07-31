@@ -2,7 +2,7 @@
   "name": "my-expo-app",
   "version": "1.0.0",
   "scripts": {
-    "android": "DARK_MODE=media expo run:android",
+    "android": "expo run:android",
     "ios": "DARK_MODE=media expo run:ios",
     "start": "expo start",
     "prebuild": "expo prebuild",

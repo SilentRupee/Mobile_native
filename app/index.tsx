@@ -4,46 +4,44 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
-import {jwtDecode} from "jwt-decode"
+import { jwtDecode } from "jwt-decode";
 
 const StartPage = () => {
-  // Use a more descriptive state name
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [redirectPath, setRedirectPath] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-        console.log("cj");
       try {
+        console.log("dasdas");
         const token = await AsyncStorage.getItem("token");
-        let role="Customer";
         if (token) {
-          const decoded = jwtDecode(token);
-
-          console.log(decoded); 
+          const decoded: any = jwtDecode(token);
+          if (decoded.role === "Merchant") {
+            setRedirectPath("/(tabs)/(merchant)");
+          } else if (decoded.role === "Customer") {
+            setRedirectPath("/(tabs)/(customer)");
+          } else {
+            setRedirectPath("/(auth)/login");
+          }
+        } else {
+          setRedirectPath("/(auth)/login");
         }
-         console.log("true");
-        setIsAuthenticated(!!token); 
       } catch (error) {
-        console.error("Failed to check auth status", error);
-
-        setIsAuthenticated(false);
+        setRedirectPath("/(auth)/login");
       }
     };
-    
     checkAuthStatus();
   }, []);
-  if (isAuthenticated === null) {
+
+  if (!redirectPath) {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color="#000000" />
       </View>
     );
   }
-  if (isAuthenticated) {
-    return <Redirect href="/(tabs)/(admin)" />;
-  } else {
-    return <Redirect href="/(auth)/login" />;
-  }
+
+  return <Redirect href={redirectPath} />;
 };
 
 const styles = StyleSheet.create({
