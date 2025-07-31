@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import MerchnatSignUpScreen from '@/components/Screens/auth/SignUp'
+import SignUpScreen from '@/components/Screens/auth/CustomerSignUp'
 
 const signUp = () => {
   return (
-    <View>
-        <MerchnatSignUpScreen />
-    </View>
+     <View>
+        <SignUpScreen/>
+        </View>
   )
 }
 
