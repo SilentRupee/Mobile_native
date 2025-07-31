@@ -40,8 +40,8 @@ import { router } from "expo-router";
 import { AuthLayout } from "../layout/layout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
-
-const BACKEND_URL = "https://your-backend-url.com/api";
+import { jwtDecode } from "jwt-decode";
+import {BACKEND_URL} from "@/BackendUrl";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -60,25 +60,36 @@ const LoginWithLeftBackground = () => {
     resolver: zodResolver(loginSchema),
   });
   const toast = useToast();
-
   const onSubmit = async (data: LoginSchemaType) => {
     setLoading(true);
-
     try {
+      // This is a good debugging step to check if the server is reachable
+      console.log("Checking server status...");
+      await axios.get(`${BACKEND_URL}/check`);
+      console.log("Server is responsive.");
+
+      // Attempting to log in
       const response = await axios.post(`${BACKEND_URL}/api/auth/login`, {
         email: data.email,
         password: data.password,
       });
 
       console.log("Login successful:", response.data);
+
+      // Store the token
       await AsyncStorage.setItem("token", response.data.token);
-      await AsyncStorage.setItem("userid", response.data.user.id);
-      await AsyncStorage.setItem("username", response.data.user.username);
-      await AsyncStorage.setItem("Avatar", response.data.user.Avatar);
-      
+
+      // Decode token for potential use (e.g., storing user info)
+      const decoded = jwtDecode(response.data.token);
+      console.log("Decoded Token:", decoded);
+
+      // Navigate to the merchant tab
+      router.replace("/(tabs)/(merchant)");
+
+      // Show success message
       toast.show({
         placement: "bottom right",
-        render: ({ id }:any) => {
+        render: ({ id }: any) => {
           return (
             <Toast nativeID={id} variant="solid" action="success">
               <ToastTitle>Login successful!</ToastTitle>
@@ -86,16 +97,26 @@ const LoginWithLeftBackground = () => {
           );
         },
       });
-      
-      router.replace("/(tabs)");
 
     } catch (err) {
-      const axiosError = err as AxiosError<{ message: string }>;
-      const errorMessage = axiosError.response?.data?.message || "Login failed. Please check your credentials.";
-      
+      console.error("An error occurred during login:", err); // Log the full error for debugging
+
+      let errorMessage = "An unexpected error occurred. Please try again.";
+
+      // Safely check if the error is an Axios error and has a response from the server
+      if (axios.isAxiosError(err) && err.response) {
+        // Use the specific error message from the API if available
+        errorMessage = err.response.data?.message || "Login failed. Please check your credentials.";
+        console.error("API Error Response:", err.response.data);
+      } else if (err instanceof Error) {
+        // Handle other types of errors (e.g., network issues)
+        errorMessage = err.message;
+      }
+
+      // Show error message
       toast.show({
         placement: "bottom right",
-        render: ({ id }:any) => {
+        render: ({ id }: any) => {
           return (
             <Toast nativeID={id} variant="solid" action="error">
               <ToastTitle>{errorMessage}</ToastTitle>

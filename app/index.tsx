@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
+import {jwtDecode} from "jwt-decode"
 
 const StartPage = () => {
   // Use a more descriptive state name
@@ -14,22 +15,23 @@ const StartPage = () => {
         console.log("cj");
       try {
         const token = await AsyncStorage.getItem("token");
-        // Corrected Logic:
-        // !!token is `true` if the token exists.
-        // !!token is `false` if the token is null.
+        let role="Customer";
+        if (token) {
+          const decoded = jwtDecode(token);
+
+          console.log(decoded); 
+        }
+         console.log("true");
         setIsAuthenticated(!!token); 
       } catch (error) {
         console.error("Failed to check auth status", error);
-        // Default to not authenticated if an error occurs
+
         setIsAuthenticated(false);
       }
     };
-
+    
     checkAuthStatus();
   }, []);
-
-  // Show a loading indicator while we check for the token.
-  // This prevents any screen flicker.
   if (isAuthenticated === null) {
     return (
       <View style={styles.loaderContainer}>
@@ -37,12 +39,8 @@ const StartPage = () => {
       </View>
     );
   }
-
-  // Corrected Redirection:
-  // If the user is authenticated, send them to the main app.
-  // Otherwise, send them to the login screen.
   if (isAuthenticated) {
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href="/(tabs)/(admin)" />;
   } else {
     return <Redirect href="/(auth)/login" />;
   }
@@ -57,3 +55,4 @@ const styles = StyleSheet.create({
 });
 
 export default StartPage;
+

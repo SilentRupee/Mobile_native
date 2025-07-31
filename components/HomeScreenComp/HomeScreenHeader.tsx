@@ -1,8 +1,17 @@
 import {  Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-
+import { Button } from '@gluestack-ui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Redirect } from 'expo-router';
+import { router } from 'expo-router';
 const HomeScreenHeader: React.FC = () => {
+  const logout=async()=>{
+    console.log("dasd");
+   await AsyncStorage.removeItem("token");
+   router.push('/(auth)/login')
+  }
+
    return (
     <View className="flex-row justify-between items-center px-5 py-4 bg-white">
       <View className="flex-row items-center">
@@ -11,9 +20,11 @@ const HomeScreenHeader: React.FC = () => {
           className="w-12 h-12 rounded-full mr-3"
         />
         <View className="flex-col">
+
           <Text className="text-sm text-gray-600 font-normal">
             Welcome Back,
           </Text>
+          <Button  onPress={logout}><Text>Log out</Text></Button>
           <Text className="text-lg text-black font-semibold">
             Sai
           </Text>
