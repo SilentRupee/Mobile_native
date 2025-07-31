@@ -3,9 +3,11 @@ import DashboardHeader from "../PaymentTableComp/DashboardHeader"
 import TableBulkAction from "../PaymentTableComp/TableBulkAction"
 import SummaryCards from "../PaymentTableComp/SummaryCards"
 import ProductTable from "../PaymentTableComp/PaymentTable"
+import { Button, ButtonText } from '@/components/ui/button';
+import { VStack } from '@/components/ui/vstack';
+import { router } from 'expo-router';
 import axios from "axios"
 import { BACKEND_URL } from "@/BackendUrl"
- 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { jwtDecode } from "jwt-decode"
 
@@ -142,7 +144,7 @@ const PaymentDashboard = () => {
       const id=decode.merchantId;
       console.log(id);
       const response=await axios.get(`${BACKEND_URL}/api/merchants/${id}/products`);
-      console.log(response);
+   
       setData(response.data);
       }
     };
@@ -158,10 +160,40 @@ const PaymentDashboard = () => {
     )
   }
 
+  const handleCreateBill = () => {
+    if (selectedRows.length === 0) {
+      alert("Please select at least one product");
+      return;
+    }
+
+    const selectedProducts = data.filter(product => selectedRows.includes(product.id));
+    
+    router.push({
+      pathname: "/(tabs)/(merchant)/bill-payment",
+      params: { 
+        selectedProducts: JSON.stringify(selectedProducts)
+      }
+    });
+  }
+
   const filteredData = data
 
   return (
-    <ProductTable data={filteredData} selectedRows={selectedRows} onToggleRowSelection={toggleRowSelection} />
+    <VStack className="flex-1">
+      <ProductTable data={filteredData} selectedRows={selectedRows} onToggleRowSelection={toggleRowSelection} />
+      
+      {/* Create Bill Button */}
+      {selectedRows.length > 0 && (
+        <VStack className="p-4 bg-white border-t border-gray-200">
+          <Button 
+            className="w-full" 
+            onPress={handleCreateBill}
+          >
+            <ButtonText>Create Bill with {selectedRows.length} Selected Products</ButtonText>
+          </Button>
+        </VStack>
+      )}
+    </VStack>
   )
 }
 

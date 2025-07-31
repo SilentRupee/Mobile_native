@@ -6,7 +6,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Feather from '@expo/vector-icons/Feather';
 
-
 export default function TabLayout() {
   
   return (
@@ -32,6 +31,16 @@ export default function TabLayout() {
           title: 'Services',
           tabBarIcon: ({ color, focused }) => (
             <AntDesign name="customerservice" size={24} color="black" />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="bill-payment"
+        options={{
+          title: 'Create Bill',
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons name="receipt" size={24} color={color} />
           ),
         }}
       />
