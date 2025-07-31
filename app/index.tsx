@@ -12,7 +12,7 @@ const StartPage = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        console.log("dasdas");
+       
         const token = await AsyncStorage.getItem("token");
         if (token) {
           const decoded: any = jwtDecode(token);

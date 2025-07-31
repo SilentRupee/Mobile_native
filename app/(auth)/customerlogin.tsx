@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import {Login} from '@/components/Screens/auth/login'
-import { CustomerLogin } from '@/components/Screens/auth/customerlogin'
+import {Login} from '@/components/Screens/auth/customerlogin'
 
-const login = () => {
+const customerlogin = () => {
   return (
     <View>
-    <CustomerLogin/>
+    <Login/>
     </View>
   )
 }
 
-export default login
+export default customerlogin
 

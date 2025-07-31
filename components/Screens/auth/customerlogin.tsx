@@ -41,7 +41,8 @@ import { AuthLayout } from "../layout/layout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
-import {BACKEND_URL} from "@/BackendUrl";
+
+const BACKEND_URL = "http://192.168.29.157:3003";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -50,7 +51,7 @@ const loginSchema = z.object({
 });
 type LoginSchemaType = z.infer<typeof loginSchema>;
 
-const LoginWithLeftBackground = () => {
+const CustomerLoginWithLeftBackground = () => {
   const [loading, setLoading] = useState(false);
   const {
     control,
@@ -63,31 +64,26 @@ const LoginWithLeftBackground = () => {
   const onSubmit = async (data: LoginSchemaType) => {
     setLoading(true);
     try {
-
-      console.log("Checking server status...");
-      console.log("Baek",BACKEND_URL);
-      await axios.get(`${BACKEND_URL}/check`);
-      console.log("Server is responsive.");
-
-     
-      const response = await axios.post(`${BACKEND_URL}/api/customer/login`, {
+      console.log("Attempting to connect to:", `${BACKEND_URL}/api/auth/login`);
+      console.log("Request data:", { email: data.email, password: data.password });
+      
+      const response = await axios.post(`${BACKEND_URL}/api/auth/login`, {
         email: data.email,
         password: data.password,
       });
 
       console.log("Login successful:", response.data);
 
-      // Store the token
       await AsyncStorage.setItem("token", response.data.token);
+      await AsyncStorage.setItem("userid", response.data.user.id);
+      await AsyncStorage.setItem("username", response.data.user.username);
 
-      // Decode token for potential use (e.g., storing user info)
       const decoded = jwtDecode(response.data.token);
       console.log("Decoded Token:", decoded);
 
-      // Navigate to the merchant tab
+      // Navigate to the customer tab
       router.replace("/(tabs)/(customer)");
 
-      // Show success message
       toast.show({
         placement: "bottom right",
         render: ({ id }: any) => {
@@ -100,21 +96,17 @@ const LoginWithLeftBackground = () => {
       });
 
     } catch (err) {
-      console.error("An error occurred during login:", err); // Log the full error for debugging
+      console.error("An error occurred during login:", err);
 
       let errorMessage = "An unexpected error occurred. Please try again.";
 
-      // Safely check if the error is an Axios error and has a response from the server
       if (axios.isAxiosError(err) && err.response) {
-        // Use the specific error message from the API if available
         errorMessage = err.response.data?.message || "Login failed. Please check your credentials.";
         console.error("API Error Response:", err.response.data);
       } else if (err instanceof Error) {
-        // Handle other types of errors (e.g., network issues)
         errorMessage = err.message;
       }
 
-      // Show error message
       toast.show({
         placement: "bottom right",
         render: ({ id }: any) => {
@@ -146,10 +138,20 @@ const LoginWithLeftBackground = () => {
   return (
     <VStack className="max-w-[440px] w-full" space="md">
       <VStack className="md:items-center" space="md">
-       
+        <Pressable
+          onPress={() => {
+            router.back();
+          }}
+        >
+          <Icon
+            as={ArrowLeftIcon}
+            className="md:hidden stroke-background-800"
+            size="xl"
+          />
+        </Pressable>
         <VStack>
           <Heading className="md:text-center" size="3xl">
-            Sign in
+            Customer Sign in
           </Heading>
           <Text>Sign in to your Silentrupee account Customer</Text>
         </VStack>
@@ -279,10 +281,10 @@ const LoginWithLeftBackground = () => {
   );
 };
 
-export const CustomerLogin = () => {
+export const Login = () => {
   return (
     <AuthLayout>
-      <LoginWithLeftBackground />
+      <CustomerLoginWithLeftBackground />
     </AuthLayout>
   );
 };

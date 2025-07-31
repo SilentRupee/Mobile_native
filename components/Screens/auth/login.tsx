@@ -264,7 +264,8 @@ const LoginWithLeftBackground = () => {
           </Button>
         </VStack>
           <Button onPress={()=>{router.push("/(auth)/customerlogin")}}>
-            <Text>Wallet</Text></Button>
+            <ButtonText>Customer Login</ButtonText>
+          </Button>
       </VStack>
     </VStack>
   );
