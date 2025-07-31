@@ -29,7 +29,7 @@ import {
   Icon,
 } from "@/components/ui/icon";
 import { Button, ButtonText, ButtonIcon } from "@/components/ui/button";
-import { Keyboard } from "react-native";
+import { Keyboard,Dimensions } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,6 +41,8 @@ import { AuthLayout } from "../layout/layout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const BACKEND_URL = "http://192.168.29.157:3003";
 
@@ -136,40 +138,50 @@ const CustomerLoginWithLeftBackground = () => {
   };
 
   return (
-    <VStack className="max-w-[440px] w-full" space="md">
-      <VStack className="md:items-center" space="md">
+    <VStack className="w-full flex-1 px-5 pt-4 min-h-screen" space="md">
+      {/* Header Section */}
+      <VStack className="w-full mb-8" space="lg">
         <Pressable
           onPress={() => {
             router.back();
           }}
+          className="w-10 h-10 justify-center"
         >
           <Icon
             as={ArrowLeftIcon}
-            className="md:hidden stroke-background-800"
+            className="stroke-background-800"
             size="xl"
           />
         </Pressable>
-        <VStack>
-          <Heading className="md:text-center" size="3xl">
+        
+        <VStack space="sm">
+          <Heading className="text-4xl font-bold leading-tight text-gray-900">
             Customer Sign in
           </Heading>
-          <Text>Sign in to your Silentrupee account Customer</Text>
+          <Text className="text-base leading-6 text-gray-600">
+            Sign in to your Silentrupee account Customer
+          </Text>
         </VStack>
       </VStack>
-      <VStack className="w-full">
-        <VStack space="xl" className="w-full">
+
+      {/* Form Section */}
+      <VStack className="w-full flex-1" space="xl">
+        <VStack space="lg" className="w-full">
+          {/* Email Input */}
           <FormControl isInvalid={!!errors.email}>
-            <FormControlLabel>
-              <FormControlLabelText>Email</FormControlLabelText>
+            <FormControlLabel className="mb-3">
+              <FormControlLabelText className="text-sm font-medium text-gray-800">
+                Email
+              </FormControlLabelText>
             </FormControlLabel>
             <Controller
               name="email"
               defaultValue=""
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="h-[52px]">
                   <InputField
-                    className="text-sm"
+                    className="text-base px-4 h-[52px] text-gray-900"
                     placeholder="Email"
                     type="text"
                     value={value}
@@ -179,6 +191,7 @@ const CustomerLoginWithLeftBackground = () => {
                     returnKeyType="done"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    placeholderTextColor="#9CA3AF"
                   />
                 </Input>
               )}
@@ -190,18 +203,22 @@ const CustomerLoginWithLeftBackground = () => {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
+
+          {/* Password Input */}
           <FormControl isInvalid={!!errors.password}>
-            <FormControlLabel>
-              <FormControlLabelText>Password</FormControlLabelText>
+            <FormControlLabel className="mb-3">
+              <FormControlLabelText className="text-sm font-medium text-gray-800">
+                Password
+              </FormControlLabelText>
             </FormControlLabel>
             <Controller
               defaultValue=""
               name="password"
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="h-[52px] relative">
                   <InputField
-                    className="text-sm"
+                    className="text-base px-4 pr-12 h-[52px] text-gray-900"
                     placeholder="Password"
                     value={value}
                     onChangeText={onChange}
@@ -209,8 +226,12 @@ const CustomerLoginWithLeftBackground = () => {
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
                     type={showPassword ? "text" : "password"}
+                    placeholderTextColor="#9CA3AF"
                   />
-                  <InputSlot onPress={handleState} className="pr-3">
+                  <InputSlot 
+                    onPress={handleState} 
+                    className="absolute right-4 h-[52px] justify-center"
+                  >
                     <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
                   </InputSlot>
                 </Input>
@@ -224,6 +245,7 @@ const CustomerLoginWithLeftBackground = () => {
             </FormControlError>
           </FormControl>
 
+          {/* Remember Me Checkbox */}
           <Controller
             name="rememberme"
             defaultValue={false}
@@ -235,11 +257,12 @@ const CustomerLoginWithLeftBackground = () => {
                 isChecked={value}
                 onChange={onChange}
                 aria-label="Remember me"
+                className="flex-row items-start mt-2"
               >
-                <CheckboxIndicator>
+                <CheckboxIndicator className="w-[18px] h-[18px] mr-3 mt-0.5">
                   <CheckboxIcon as={CheckIcon} />
                 </CheckboxIndicator>
-                <CheckboxLabel>
+                <CheckboxLabel className="text-sm leading-5 text-gray-700">
                   Remember me
                 </CheckboxLabel>
               </Checkbox>
@@ -247,31 +270,41 @@ const CustomerLoginWithLeftBackground = () => {
           />
         </VStack>
 
-        <VStack className="w-full my-7" space="lg">
-          <Button className="w-full" onPress={handleSubmit(onSubmit)} isDisabled={loading}>
-            <ButtonText className="font-medium">
+        {/* Spacer to push buttons down */}
+        <VStack className="flex-1" />
+
+        {/* Buttons Section */}
+        <VStack className="w-full mb-6" space="md">
+          <Button 
+            className="w-full h-[52px] rounded-lg bg-gray-800" 
+            onPress={handleSubmit(onSubmit)} 
+            isDisabled={loading}
+          >
+            <ButtonText className="font-medium text-base text-white">
               {loading ? "Signing in..." : "Sign in"}
             </ButtonText>
           </Button>
+          
           <Button
             variant="outline"
             action="secondary"
-            className="w-full gap-1"
+            className="w-full h-[52px] rounded-lg border border-gray-300 flex-row items-center justify-center gap-2"
             onPress={() => {}}
           >
-            <ButtonText className="font-medium">
+            <ButtonText className="font-medium text-base text-gray-700">
               Continue with Google
             </ButtonText>
             <ButtonIcon as={GoogleIcon} />
           </Button>
         </VStack>
-        <HStack className="self-center" space="sm">
-          <Text size="md">Don't have an account?</Text>
+
+        {/* Sign Up Link */}
+        <HStack className="self-center mb-6 items-center justify-center" space="sm">
+          <Text className="text-base text-gray-600">
+            Don't have an account?
+          </Text>
           <Link href="/(auth)/signUp">
-            <LinkText
-              className="font-medium text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700"
-              size="md"
-            >
+            <LinkText className="font-semibold text-base text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700">
               Sign up
             </LinkText>
           </Link>
