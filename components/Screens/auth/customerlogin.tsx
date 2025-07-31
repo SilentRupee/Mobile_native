@@ -5,7 +5,7 @@ import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { LinkText } from "@/components/ui/link";
-import Link from "@unitools/link";
+import { Link } from "expo-router";
 import {
   FormControl,
   FormControlError,
@@ -267,7 +267,7 @@ const CustomerLoginWithLeftBackground = () => {
         </VStack>
         <HStack className="self-center" space="sm">
           <Text size="md">Don't have an account?</Text>
-          <Link href="/auth/signup">
+          <Link href="/(auth)/signUp">
             <LinkText
               className="font-medium text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700"
               size="md"

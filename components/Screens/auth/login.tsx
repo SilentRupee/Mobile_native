@@ -263,7 +263,7 @@ const LoginWithLeftBackground = () => {
             <ButtonIcon as={GoogleIcon} />
           </Button>
         </VStack>
-          <Button onPress={()=>{router.push("/(auth)/customerlogin")}}>
+          <Button onPress={()=>{router.push("/(auth)/signUp")}}>
             <ButtonText>Customer Login</ButtonText>
           </Button>
       </VStack>
