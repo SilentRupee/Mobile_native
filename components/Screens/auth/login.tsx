@@ -5,7 +5,7 @@ import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { LinkText } from "@/components/ui/link";
-import Link from "@unitools/link";
+import { Link } from "expo-router";
 import {
   FormControl,
   FormControlError,
@@ -144,30 +144,36 @@ const LoginWithLeftBackground = () => {
   };
 
   return (
-    <VStack className="max-w-[440px] w-full" space="md">
-      <VStack className="md:items-center" space="md">
+    <VStack className="w-full flex-1 px-5 pt-4 min-h-screen" space="md">
+      <VStack className="w-full mb-8" space="lg">
        
-        <VStack>
-          <Heading className="md:text-center" size="3xl">
+        <VStack space="sm">
+          <Heading className="text-4xl font-bold leading-tight text-gray-900">
             Sign in
           </Heading>
-          <Text>Sign in to your Silentrupee account  Merchant</Text>
+          <Text className=" text-base leading-6 text-gray-600">
+            Sign in to your Silentrupee account  Merchant
+            </Text>
         </VStack>
       </VStack>
-      <VStack className="w-full">
-        <VStack space="xl" className="w-full">
+
+      <VStack className="w-full flex-1" space="xl">
+        <VStack space="lg" className="w-full">
+
           <FormControl isInvalid={!!errors.email}>
-            <FormControlLabel>
-              <FormControlLabelText>Email</FormControlLabelText>
+            <FormControlLabel className="mb-3">
+              <FormControlLabelText className="text-sm font-medium text-gray-800">
+                Email
+                </FormControlLabelText>
             </FormControlLabel>
             <Controller
               name="email"
               defaultValue=""
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="h-[52px]">
                   <InputField
-                    className="text-sm"
+                    className="text-base px-4 h-[52px] text-gray-900"
                     placeholder="Email"
                     type="text"
                     value={value}
@@ -177,6 +183,7 @@ const LoginWithLeftBackground = () => {
                     returnKeyType="done"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    placeholderTextColor="#9CA3AF"
                   />
                 </Input>
               )}
@@ -189,17 +196,19 @@ const LoginWithLeftBackground = () => {
             </FormControlError>
           </FormControl>
           <FormControl isInvalid={!!errors.password}>
-            <FormControlLabel>
-              <FormControlLabelText>Password</FormControlLabelText>
+            <FormControlLabel className="mb-3">
+              <FormControlLabelText className="text-sm font-medium text-gray-800">
+                Password
+                </FormControlLabelText>
             </FormControlLabel>
             <Controller
               defaultValue=""
               name="password"
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="h-[52px] relative">
                   <InputField
-                    className="text-sm"
+                    className="text-base px-4 pr-12 h-[52px] text-gray-900"
                     placeholder="Password"
                     value={value}
                     onChangeText={onChange}
@@ -207,8 +216,12 @@ const LoginWithLeftBackground = () => {
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
                     type={showPassword ? "text" : "password"}
+                     placeholderTextColor="#9CA3AF"
                   />
-                  <InputSlot onPress={handleState} className="pr-3">
+                  <InputSlot 
+                  onPress={handleState} 
+                  className="absolute right-4 h-[52px] justify-center"
+                  >
                     <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
                   </InputSlot>
                 </Input>
@@ -233,11 +246,12 @@ const LoginWithLeftBackground = () => {
                 isChecked={value}
                 onChange={onChange}
                 aria-label="Remember me"
+                className="flex-row items-start mt-2"
               >
-                <CheckboxIndicator>
+                <CheckboxIndicator className="w-[18px] h-[18px] mr-3 mt-0.5">
                   <CheckboxIcon as={CheckIcon} />
                 </CheckboxIndicator>
-                <CheckboxLabel>
+                <CheckboxLabel className="text-sm leading-5 text-gray-700">
                   Remember me
                 </CheckboxLabel>
               </Checkbox>
@@ -245,27 +259,45 @@ const LoginWithLeftBackground = () => {
           />
         </VStack>
 
-        <VStack className="w-full my-7" space="lg">
-          <Button className="w-full" onPress={handleSubmit(onSubmit)} isDisabled={loading}>
-            <ButtonText className="font-medium">
+        <VStack className="flex-1" />
+
+        <VStack className="w-full mb-6" space="md">
+          <Button 
+          className="w-full h-[52px] rounded-lg bg-gray-800" 
+          onPress={handleSubmit(onSubmit)} 
+          isDisabled={loading}
+          >
+            <ButtonText className="font-medium text-base text-white">
               {loading ? "Signing in..." : "Sign in"}
             </ButtonText>
           </Button>
+
           <Button
             variant="outline"
             action="secondary"
-            className="w-full gap-1"
+            className="w-full  h-[52px] rounded-lg border border-gray-300 flex-row items-center justify-center gap-2 "
             onPress={() => {}}
           >
-            <ButtonText className="font-medium">
+            <ButtonText className="font-medium text-base text-gray-700">
               Continue with Google
             </ButtonText>
             <ButtonIcon as={GoogleIcon} />
           </Button>
         </VStack>
-          <Button onPress={()=>{router.push("/(auth)/customerlogin")}}>
+
+          {/* <Button onPress={()=>{router.push("/(auth)/customerlogin")}}>
             <ButtonText>Customer Login</ButtonText>
-          </Button>
+          </Button> */}
+          <HStack className="self-center mb-6 items-center justify-center" space="sm">
+                    <Text className="text-base text-gray-600">
+                      Want to log in as a customer?
+                    </Text>
+                    <Link href="   /(SplashSCREEN)/onboardingScreen3   ">
+                      <LinkText className="font-semibold text-base text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700">
+                        customerlogin
+                      </LinkText>
+                    </Link>
+                  </HStack>
       </VStack>
     </VStack>
   );
