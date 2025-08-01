@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useRef, useEffect } from "react"
-import {View,Text,TextInput,TouchableOpacity,ScrollView,StatusBar,SafeAreaView,Animated,Easing, BackHandler,} from "react-native"
+import {View,Text,TouchableOpacity,StatusBar,SafeAreaView,Animated,Easing, BackHandler, PermissionsAndroid,} from "react-native"
 import { Camera, CameraView } from "expo-camera"
 import { Ionicons } from "@expo/vector-icons"
 import { router } from "expo-router"
@@ -11,9 +11,8 @@ export default function QRScannerScreen({}: QRScannerScreenProps) {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null)
   const [scanned, setScanned] = useState(false)
   const [torchOn, setTorchOn] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [animationError, setAnimationError] = useState(false)
   const scanAnimation = useRef(new Animated.Value(0)).current
+
   React.useEffect(() => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync()
@@ -22,15 +21,14 @@ export default function QRScannerScreen({}: QRScannerScreenProps) {
     getCameraPermissions()
   }, [])
 
-useEffect(()=>{
-  const backActionBtn=()=>{
-    router.push('/(tabs)/')
-    return true
-  }
-  const backHandler =BackHandler.addEventListener('hardwareBackPress',backActionBtn)
-  return () => backHandler.remove()
-},[])
-
+  useEffect(()=>{
+    const backActionBtn=()=>{
+      router.push('/(tabs)/(merchant)')
+      return true
+    }
+    const backHandler =BackHandler.addEventListener('hardwareBackPress',backActionBtn)
+    return () => backHandler.remove()
+  },[])
 
   useEffect(() => {
     const startAnimation = () => {
@@ -60,10 +58,25 @@ useEffect(()=>{
   }
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>
+    return (
+      <SafeAreaView className="flex-1 bg-black items-center justify-center">
+        <Text className="text-white text-lg">Requesting camera permission...</Text>
+      </SafeAreaView>
+    )
   }
+  
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>
+    return (
+      <SafeAreaView className="flex-1 bg-black items-center justify-center">
+        <Text className="text-white text-lg">No access to camera</Text>
+        <TouchableOpacity 
+          className="mt-4 bg-white px-6 py-3 rounded-full"
+          onPress={() => router.replace('/(tabs)/')}
+        >
+          <Text className="text-black font-semibold">Go Back</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    )
   }
 
   return (
@@ -73,16 +86,19 @@ useEffect(()=>{
       {/* Camera View */}
       <View className="flex-1 relative">
         <CameraView
-          className="flex-1"
+          style={{ flex: 1 }}
           facing="back"
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
           enableTorch={torchOn}
+          barcodeScannerSettings={{
+            barcodeTypes: ['qr', 'code128', 'code39', 'ean13', 'ean8', 'upc_a', 'upc_e'],
+          }}
         />
 
         {/* Header */}
-        <View className="absolute top-6 left-0 right-0 flex-row items-center justify-between px-4">
+        <View className="absolute top-6 left-0 right-0 flex-row items-center justify-between px-4 z-10">
           <View className="flex-1" />
-          <Text className="text-white text-lg font-black">Scan Any QR Code</Text>
+          <Text className="text-white text-lg font-black">Scan QR Code</Text>
           <TouchableOpacity className="p-2"
            onPress={() => router.replace('/(tabs)/')} >
             <Ionicons name="close" size={24} color="#B0B0B0" />
@@ -90,14 +106,12 @@ useEffect(()=>{
         </View>
 
         {/* Scanner Frame with Animation */}
-        <View className="absolute inset-0 items-center justify-center">
+        <View className="absolute inset-0 items-center justify-center z-10">
           <View className="w-44 h-44 relative">
             {/* Scanner Frame */}
             <View className="w-full h-full border-2 border-white/30 rounded-2xl" />
 
-        
             <View className="absolute inset-0">
-              
               <Animated.View
                 className="absolute w-full h-1 bg-green-400"
                 style={{
@@ -115,9 +129,8 @@ useEffect(()=>{
           </View>
         </View>
 
-        
-        <View className="absolute right-5 top-32 flex-col gap-5">
-          
+        {/* Torch Button */}
+        <View className="absolute right-5 top-32 z-10">
           <View className="items-center">
             <TouchableOpacity
               className="w-9 h-9 bg-gray-600/70 rounded-full items-center justify-center"
@@ -131,58 +144,19 @@ useEffect(()=>{
               </Text>
             </View>
           </View>
-
-          <View className="items-center">
-            <TouchableOpacity className="w-9 h-9 bg-gray-600/70 rounded-full items-center justify-center">
-              <Ionicons name="images-outline" size={18} color="white" />
-            </TouchableOpacity>
-            <View className="mt-1 bg-black/70 rounded px-2 py-1">
-              <Text className="text-white text-xs">
-                Scan from{"\n"}Gallery or{"\n"}WhatsApp
-              </Text>
-            </View>
-          </View>
-
-         
-          <View className="items-center">
-            <TouchableOpacity className="w-9 h-9 bg-gray-600/70 rounded-full items-center justify-center">
-              <Ionicons name="qr-code-outline" size={18} color="white" />
-            </TouchableOpacity>
-            <View className="mt-1 bg-black/70 rounded px-2 py-1">
-              <Text className="text-white text-xs">My QR</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      <View className="mx-4 mb-4 bg-green-100 rounded-lg p-4 flex-row items-center justify-between">
-        <Text className="text-black text-sm font-medium">Get flat 4500 Cashback Points!</Text>
-        <Text className="text-blue-600 text-sm font-medium">Activate now!</Text>
-      </View>
-
-      
-      <View className="bg-white rounded-t-2xl px-4 pt-4 pb-8">
-     
-        <View className="border border-gray-300 rounded-lg mb-4 flex-row items-center">
-          <TextInput
-            className="flex-1 px-4 py-3 text-base text-black"
-            placeholder="Enter Mobile Number or Name"
-            placeholderTextColor="#B0B0B0"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-          />
-          <TouchableOpacity className="p-3">
-            <Ionicons name="people-outline" size={20} color="#666" />
-          </TouchableOpacity>
         </View>
 
-        <Text className="text-black text-base font-medium mb-4">Recents</Text>
-        <ScrollView className="max-h-32">
-          <View className="py-4">
-            <Text className="text-gray-500 text-center">No recent scans</Text>
+        {/* Scan Again Button */}
+        {scanned && (
+          <View className="absolute bottom-20 left-0 right-0 items-center z-10">
+            <TouchableOpacity
+              className="bg-white px-6 py-3 rounded-full"
+              onPress={() => setScanned(false)}
+            >
+              <Text className="text-black font-semibold">Scan Again</Text>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
+        )}
       </View>
     </SafeAreaView>
   )
