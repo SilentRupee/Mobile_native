@@ -100,7 +100,7 @@ const BillPaymentScreen = () => {
 
         const response = await axios.post(`${BACKEND_URL}/api/merchants/${merchantId}/qr-code`, billData);
         
-        // Create a payment URL or UPI payment string that can be scanned
+        // Use the backend response data structure
         const paymentData = {
           type: "payment",
           merchantId: merchantId,
@@ -113,19 +113,17 @@ const BillPaymentScreen = () => {
           })),
           timestamp: new Date().toISOString()
         };
-
-        // Create UPI payment string (can be scanned by any UPI app)
-        const upiString = `upi://pay?pa=${merchantId}@silentrupee&pn=SilentRupee&am=${calculateTotal()}&tn=Bill-${paymentData.billId}&cu=INR`;
         
-        // Or create a custom payment URL
-        const paymentUrl = `silentrupee://payment?data=${encodeURIComponent(JSON.stringify(paymentData))}`;
+        // Create the QR data as JSON string (not URL)
+        const qrData = JSON.stringify(paymentData);
      
         router.push({
           pathname: "/(nonTabs)/qr-display",
           params: { 
-            qrData: upiString, // Use UPI string for better compatibility
+            qrData: qrData, 
             billId: paymentData.billId,
-            totalAmount: calculateTotal()
+            totalAmount: calculateTotal(),
+            paymentData: JSON.stringify(paymentData)
           }
         });
       }

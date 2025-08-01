@@ -10,7 +10,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 const QRDisplayScreen = () => {
   const params = useLocalSearchParams();
-  const { qrData, billId, totalAmount } = params;
+  const { qrData, billId, totalAmount, paymentData } = params;
   const [qrCode, setQrCode] = useState<string>('');
 
   useEffect(() => {
