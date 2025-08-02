@@ -37,11 +37,11 @@ const BillPaymentScreen = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Get selected products from navigation params
+  
     if (params.selectedProducts) {
       try {
         const products: ProductData[] = JSON.parse(params.selectedProducts as string);
-        // Initialize with quantity 1 for each selected product
+     
         const initialSelected = products.map(product => ({
           product,
           quantity: 1
@@ -97,24 +97,22 @@ const BillPaymentScreen = () => {
           totalAmount: calculateTotal(),
           timestamp: new Date().toISOString()
         };
-
         const response = await axios.post(`${BACKEND_URL}/api/merchants/${merchantId}/qr-code`, billData);
         
-        // Use the backend response data structure
         const paymentData = {
           type: "payment",
           merchantId: merchantId,
           billId: response.data.billId || Math.random().toString(),
           amount: calculateTotal(),
           items: selectedProducts.map(sp => ({
+            productId:sp.product.id,
             name: sp.product.name,
             quantity: sp.quantity,
             price: sp.product.price
           })),
           timestamp: new Date().toISOString()
         };
-        
-        // Create the QR data as JSON string (not URL)
+      
         const qrData = JSON.stringify(paymentData);
      
         router.push({

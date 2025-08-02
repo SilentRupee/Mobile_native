@@ -69,7 +69,7 @@ const CustomerLoginWithLeftBackground = () => {
       console.log("Attempting to connect to:", `${BACKEND_URL}/api/auth/login`);
       console.log("Request data:", { email: data.email, password: data.password });
       
-      const response = await axios.post(`${BACKEND_URL}/api/auth/login`, {
+      const response = await axios.post(`${BACKEND_URL}/api/customer/login`, {
         email: data.email,
         password: data.password,
       });
@@ -77,25 +77,13 @@ const CustomerLoginWithLeftBackground = () => {
       console.log("Login successful:", response.data);
 
       await AsyncStorage.setItem("token", response.data.token);
-      await AsyncStorage.setItem("userid", response.data.user.id);
-      await AsyncStorage.setItem("username", response.data.user.username);
+   
 
       const decoded = jwtDecode(response.data.token);
       console.log("Decoded Token:", decoded);
 
-      // Navigate to the customer tab
       router.replace("/(tabs)/(customer)");
 
-      toast.show({
-        placement: "bottom right",
-        render: ({ id }: any) => {
-          return (
-            <Toast nativeID={id} variant="solid" action="success">
-              <ToastTitle>Login successful!</ToastTitle>
-            </Toast>
-          );
-        },
-      });
 
     } catch (err) {
       console.error("An error occurred during login:", err);
@@ -109,16 +97,7 @@ const CustomerLoginWithLeftBackground = () => {
         errorMessage = err.message;
       }
 
-      toast.show({
-        placement: "bottom right",
-        render: ({ id }: any) => {
-          return (
-            <Toast nativeID={id} variant="solid" action="error">
-              <ToastTitle>{errorMessage}</ToastTitle>
-            </Toast>
-          );
-        },
-      });
+    
     } finally {
       setLoading(false);
     }

@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://silent-rupee-backendas.onrender.com"
+export const BACKEND_URL = "http://192.168.29.157:3003"

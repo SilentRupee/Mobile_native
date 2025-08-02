@@ -292,7 +292,7 @@ const LoginWithLeftBackground = () => {
                     <Text className="text-base text-gray-600">
                       Want to log in as a customer?
                     </Text>
-                    <Link href="   /(SplashSCREEN)/onboardingScreen3   ">
+                    <Link href="/(auth)/customerlogin">
                       <LinkText className="font-semibold text-base text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700">
                         customerlogin
                       </LinkText>

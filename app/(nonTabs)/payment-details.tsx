@@ -20,6 +20,7 @@ interface PaymentData {
     name: string;
     quantity: number;
     price: number;
+    productId?: string;
   }>;
   timestamp: string;
 }
@@ -34,7 +35,7 @@ const PaymentDetailsScreen = () => {
   useEffect(() => {
     if (params.qrData) {
       try {
-        // Parse the QR data
+        // Parse the QR data    
         const data = JSON.parse(params.qrData as string);
         
         // Validate the data structure
@@ -66,6 +67,13 @@ const PaymentDetailsScreen = () => {
         // Fetch merchant information
         if (data.merchantId && data.merchantId !== 'Unknown') {
           fetchMerchantInfo(data.merchantId);
+        } else {
+          // Set basic merchant info if no merchant ID
+          setMerchantInfo({
+            name: 'SilentRupee Merchant',
+            id: 'unknown',
+            type: 'merchant'
+          });
         }
       } catch (error) {
         console.error("Error parsing QR data:", error);
@@ -79,12 +87,19 @@ const PaymentDetailsScreen = () => {
 
   const fetchMerchantInfo = async (merchantId: string) => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/merchants/${merchantId}`);
-      setMerchantInfo(response.data);
+      const response = await axios.get(`http://192.168.29.157:3003/api/auth/name/${merchantId}`);
+      if (response.data && response.data.merchant) {
+        setMerchantInfo(response.data.merchant);
+        return;
+      }
     } catch (error) {
-      console.error("Error fetching merchant info:", error);
-      // Don't show error to user, just continue without merchant info
+      console.error("Error fetching merchant info from auth endpoint:", error);
     }
+    setMerchantInfo({
+      name: 'SilentRupee Merchant',
+      id: merchantId,
+      type: 'merchant'
+    });
   };
 
   const handlePayment = async () => {
@@ -95,7 +110,7 @@ const PaymentDetailsScreen = () => {
         Alert.alert("Error", "Please login to make payment");
         return;
       }
-
+    
       const decoded: any = jwtDecode(token);
       const customerId = decoded.customerId;
 
@@ -103,6 +118,20 @@ const PaymentDetailsScreen = () => {
         Alert.alert("Error", "Payment data not found");
         return;
       }
+      const products = paymentData.items.map(item => ({
+        productId: item.productId ,
+        quantity: item.quantity
+      }));
+      console.log(products);
+
+      const responses = await axios.post(`${BACKEND_URL}/api/purchase`, {
+        Product: products
+      },{
+        headers:{
+          'Authorization':`Bearer ${token}`
+        }
+      });
+      console.log(responses.data);
 
       const paymentPayload = {
         customerId,
@@ -113,7 +142,6 @@ const PaymentDetailsScreen = () => {
         timestamp: new Date().toISOString()
       };
 
-      const response = await axios.post(`${BACKEND_URL}/api/payments`, paymentPayload);
 
       Alert.alert(
         "Payment Successful",
@@ -184,12 +212,14 @@ const PaymentDetailsScreen = () => {
               <Text className="font-semibold text-lg">Merchant Information</Text>
               <HStack className="justify-between">
                 <Text className="text-gray-600">Merchant Name:</Text>
-                <Text className="font-medium">{merchantInfo.name || 'Unknown'}</Text>
+                <Text className="font-medium">{merchantInfo.name || merchantInfo.merchantName || 'SilentRupee Merchant'}</Text>
               </HStack>
-              <HStack className="justify-between">
-                <Text className="text-gray-600">Merchant ID:</Text>
-                <Text className="font-medium">{paymentData.merchantId}</Text>
-              </HStack>
+              {merchantInfo.email && (
+                <HStack className="justify-between">
+                  <Text className="text-gray-600">Email:</Text>
+                  <Text className="font-medium">{merchantInfo.email}</Text>
+                </HStack>
+              )}
             </VStack>
           )}
 
