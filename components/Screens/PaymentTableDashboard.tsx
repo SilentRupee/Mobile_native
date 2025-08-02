@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react"
-import DashboardHeader from "../PaymentTableComp/DashboardHeader"
-import TableBulkAction from "../PaymentTableComp/TableBulkAction"
-import SummaryCards from "../PaymentTableComp/SummaryCards"
 import ProductTable from "../PaymentTableComp/PaymentTable"
 import { Button, ButtonText } from '@/components/ui/button';
 import { VStack } from '@/components/ui/vstack';

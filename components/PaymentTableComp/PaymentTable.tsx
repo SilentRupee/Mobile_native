@@ -63,42 +63,45 @@ const ProductTable = ({ data, selectedRows, onToggleRowSelection }: ProductTable
       </View>
 
       {/* Summary Cards */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        className="px-5 py-4"
-        contentContainerStyle={{ gap: 12 }}
-      >
-      <View className="bg-white p-4 rounded-lg shadow-sm min-w-[140px]">
-          <Text className="text-xs text-gray-500 mb-1">Total Products</Text>
-          <Text className="text-lg font-bold text-gray-900">
-            {filteredData.length}
-          </Text>
-        </View>
-        <View className="bg-white p-4 rounded-lg shadow-sm min-w-[140px]">
-          <Text className="text-xs text-gray-500 mb-1">Available Products</Text>
-          <Text className="text-lg font-bold text-green-600">
-            {filteredData.filter(item => item.isAvailable).length}
-          </Text>
-        </View>
-        <View className="bg-white p-4 rounded-lg shadow-sm min-w-[140px]">
-          <Text className="text-xs text-gray-500 mb-1">Low Stock Items</Text>
-          <Text className="text-lg font-bold text-orange-600">
-            {filteredData.filter(item => item.stock < 10).length}
-          </Text>
-        </View>
-        <View className="bg-white p-4 rounded-lg shadow-sm min-w-[140px]">
-          <Text className="text-xs text-gray-500 mb-1">Categories</Text>
-          <Text className="text-lg font-bold text-blue-600">
-            {new Set(filteredData.map(item => item.category)).size}
-          </Text>
-        </View>
-      </ScrollView>
+   <ScrollView
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  className="px-5"
+  contentContainerStyle={{
+    gap: 12,
+    paddingVertical: 8,
+  }}
+>
+  <View className="bg-white px-3 py-2 rounded-lg shadow-sm min-w-[140px]">
+    <Text className="text-xs text-gray-500">Total Products</Text>
+    <Text className="text-lg font-bold text-gray-900">
+      {filteredData.length}
+    </Text>
+  </View>
+  <View className="bg-white px-3 py-2 rounded-lg shadow-sm min-w-[140px]">
+    <Text className="text-xs text-gray-500">Available Products</Text>
+    <Text className="text-lg font-bold text-green-600">
+      {filteredData.filter(item => item.isAvailable).length}
+    </Text>
+  </View>
+  <View className="bg-white px-3 py-2 rounded-lg shadow-sm min-w-[140px]">
+    <Text className="text-xs text-gray-500">Low Stock Items</Text>
+    <Text className="text-lg font-bold text-orange-600">
+      {filteredData.filter(item => item.stock < 10).length}
+    </Text>
+  </View>
+  <View className="bg-white px-3 py-2 rounded-lg shadow-sm min-w-[140px]">
+    <Text className="text-xs text-gray-500">Categories</Text>
+    <Text className="text-lg font-bold text-blue-600">
+      {new Set(filteredData.map(item => item.category)).size}
+    </Text>
+  </View>
+</ScrollView>
 
       {/* Table */}
       <View className="flex-1 bg-white mx-5 mb-5 rounded-lg shadow-sm">
         <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-          <View style={{ minWidth: 1000 }} className="p-2">
+          <View style={{ minWidth: 700 }} className="p-2">
             {/* Table Header */}
             <View className="flex-row bg-gray-50 p-3 border-b border-gray-200">
               <View className="w-8">
