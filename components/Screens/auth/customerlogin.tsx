@@ -120,7 +120,7 @@ const CustomerLoginWithLeftBackground = () => {
     <VStack className="w-full flex-1 px-5 pt-4 min-h-screen" space="md">
       {/* Header Section */}
       <VStack className="w-full mb-8" space="lg">
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             router.back();
           }}
@@ -131,7 +131,7 @@ const CustomerLoginWithLeftBackground = () => {
             className="stroke-background-800"
             size="xl"
           />
-        </Pressable>
+        </Pressable> */}
         
         <VStack space="sm">
           <Heading className="text-4xl font-bold leading-tight text-gray-900">
@@ -253,7 +253,7 @@ const CustomerLoginWithLeftBackground = () => {
         <VStack className="flex-1" />
 
         {/* Buttons Section */}
-        <VStack className="w-full mb-6" space="md">
+        <VStack className="w-full mb-2" space="md">
           <Button 
             className="w-full h-[52px] rounded-lg bg-gray-800" 
             onPress={handleSubmit(onSubmit)} 
@@ -278,7 +278,7 @@ const CustomerLoginWithLeftBackground = () => {
         </VStack>
 
         {/* Sign Up Link */}
-        <HStack className="self-center mb-6 items-center justify-center" space="sm">
+        <HStack className="self-center mb-14 items-center justify-center" space="sm">
           <Text className="text-base text-gray-600">
             Don't have an account?
           </Text>

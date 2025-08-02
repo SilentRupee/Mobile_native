@@ -176,17 +176,17 @@ const PaymentDashboard = () => {
   const filteredData = data
 
   return (
-    <VStack className="flex-1">
+    <VStack className="flex-1 mb-10">
       <ProductTable data={filteredData} selectedRows={selectedRows} onToggleRowSelection={toggleRowSelection} />
       
       {/* Create Bill Button */}
       {selectedRows.length > 0 && (
-        <VStack className="p-4 bg-white border-t border-gray-200">
+        <VStack className="p-4 bg-white border-t border-gray-900">
           <Button 
-            className="w-full" 
+            className="w-full h-[52px] rounded-lg bg-gray-900" 
             onPress={handleCreateBill}
           >
-            <ButtonText>Create Bill with {selectedRows.length} Selected Products</ButtonText>
+            <ButtonText className="text-white text-lg font-semibold">Create Bill with {selectedRows.length} Selected Products</ButtonText>
           </Button>
         </VStack>
       )}

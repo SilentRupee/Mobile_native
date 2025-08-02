@@ -195,7 +195,7 @@ const ProductTable = ({ data, selectedRows, onToggleRowSelection }: ProductTable
       </View>
 
       {/* Bulk Actions */}
-      {selectedRows.length > 0 && (
+      {/* {selectedRows.length > 0 && (
         <View className="flex-row justify-between items-center bg-blue-500 px-5 py-3">
           <Text className="text-white text-sm font-medium">{selectedRows.length} product(s) selected</Text>
           <TouchableOpacity
@@ -205,7 +205,7 @@ const ProductTable = ({ data, selectedRows, onToggleRowSelection }: ProductTable
             <Text className="text-blue-600 text-sm font-semibold">Update Products</Text>
           </TouchableOpacity>
         </View>
-      )}
+      )} */}
     </View>
   )
 }

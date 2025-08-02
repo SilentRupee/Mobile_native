@@ -250,7 +250,7 @@ const LoginWithLeftBackground = () => {
 
         <VStack className="flex-1" />
 
-        <VStack className="w-full mb-6" space="md">
+        <VStack className="w-full mb-2" space="md">
           <Button 
           className="w-full h-[52px] rounded-lg bg-gray-800" 
           onPress={handleSubmit(onSubmit)} 
@@ -277,7 +277,7 @@ const LoginWithLeftBackground = () => {
           {/* <Button onPress={()=>{router.push("/(auth)/customerlogin")}}>
             <ButtonText>Customer Login</ButtonText>
           </Button> */}
-          <HStack className="self-center mb-6 items-center justify-center" space="sm">
+          <HStack className="self-center mb-14 items-center justify-center" space="sm">
                     <Text className="text-base text-gray-600">
                       Want to log in as a customer?
                     </Text>
