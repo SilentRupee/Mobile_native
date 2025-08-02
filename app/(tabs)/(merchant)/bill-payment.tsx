@@ -181,24 +181,26 @@ const BillPaymentScreen = () => {
               </VStack>
               
               {/* Total */}
-              <View className="border-t border-gray-200 pt-3">
-                <HStack className="justify-between">
-                  <Text className="font-semibold text-lg">Total Amount</Text>
-                  <Text className="font-semibold text-lg">₹{calculateTotal()}</Text>
+                <View className="border-t border-gray-200 pt-[335px] mt-4">
+                <HStack className="justify-between items-center">
+                  <Text className="font-bold text-xl text-gray-700">Total Amount</Text>
+                  <View className="bg-blue-100 px-4 py-2 rounded-lg">
+                  <Text className="font-bold text-xl text-blue-700">₹{calculateTotal()}</Text>
+                  </View>
                 </HStack>
-              </View>
+                </View>
             </VStack>
           )}
 
           {/* Generate QR Button */}
           {selectedProducts.length > 0 && (
             <Button 
-              className="w-full" 
+              className="w-full h-[52px] rounded-lg bg-gray-800  " 
               onPress={generateQRCode}
               isDisabled={loading}
             >
-              <ButtonText>
-                {loading ? "Generating QR Code..." : `Generate QR Code - ₹${calculateTotal()}`}
+              <ButtonText className='font-bold text-lg text-white'>
+                {loading ? "Generating QR Code..." : `GENERATE QR CODE - ₹${calculateTotal()}`}
               </ButtonText>
             </Button>
           )}

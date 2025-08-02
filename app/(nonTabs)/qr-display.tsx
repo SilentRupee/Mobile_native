@@ -46,84 +46,84 @@ const QRDisplayScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <VStack className="flex-1 p-4" space="lg">
+    <SafeAreaView className="flex-1 bg-white pt-8">
+      <VStack className="flex-1 p-6" space="lg">
         {/* Header */}
         <HStack className="justify-between items-center">
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
+        <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
-          <Heading size="lg">Payment QR Code</Heading>
+        <Heading className='font-bold text-4xl'>Payment QR Code</Heading>
           <View style={{ width: 24 }} />
         </HStack>
 
         {/* Bill Details */}
-        <VStack className="bg-gray-50 p-4 rounded-lg" space="sm">
-          <Text className="font-semibold text-lg">Bill Details</Text>
+        <VStack className="bg-gray-400 p-6 mt-6 rounded-lg " space="sm">
+        <Text className="font-bold text-2xl">BILL DETAILS</Text>
           <HStack className="justify-between">
-            <Text className="text-gray-600">Bill ID:</Text>
-            <Text className="font-medium">{billId}</Text>
+        <Text className="text-white text-lg">BILL ID :</Text>
+        <Text className="font-medium text-white">{billId}</Text>
           </HStack>
           <HStack className="justify-between">
-            <Text className="text-gray-600">Total Amount:</Text>
-            <Text className="font-semibold text-lg">₹{totalAmount}</Text>
+        <Text className="text-white">TOTAL AMOUNT :</Text>
+        <Text className="font-semibold text-white text-lg">₹ {totalAmount}</Text>
           </HStack>
         </VStack>
 
         {/* QR Code Display */}
         <VStack className="flex-1 items-center justify-center" space="lg">
-          <Text className="text-lg font-medium text-center">
-            Scan this QR code to pay
+          <Text className="text-lg font-bold text-center">
+        SCAN THE QR CODE
           </Text>
           
           {/* Real QR Code */}
           <View className="w-64 h-64 bg-white rounded-lg items-center justify-center p-4 shadow-lg">
-            {qrCode ? (
-              <QRCode
-                value={qrCode}
-                size={240}
-                color="black"
-                backgroundColor="white"
-                logoSize={40}
-                logoBackgroundColor="white"
-                logoBorderRadius={8}
-                enableLinearGradient={false}
-                getRef={(c) => {
-                  // QR code reference if needed
-                }}
-              />
-            ) : (
-              <View className="w-64 h-64 bg-gray-200 rounded-lg items-center justify-center">
-                <Ionicons name="qr-code" size={120} color="#666" />
-                <Text className="text-sm text-gray-500 mt-2">Loading QR Code...</Text>
-              </View>
-            )}
+        {qrCode ? (
+          <QRCode
+            value={qrCode}
+            size={240}
+            color="black"
+            backgroundColor="white"
+            logoSize={40}
+            logoBackgroundColor="white"
+            logoBorderRadius={8}
+            enableLinearGradient={false}
+            getRef={(c) => {
+          // QR code reference if needed
+            }}
+          />
+        ) : (
+          <View className="w-64 h-64 bg-gray-200 rounded-lg items-center justify-center">
+            <Ionicons name="qr-code" size={120} color="#666" />
+            <Text className="text-sm text-gray-500 mt-2">Loading QR Code...</Text>
+          </View>
+        )}
           </View>
 
-          <Text className="text-sm text-gray-500 text-center">
-            Customer should scan this QR code with their payment app
-          </Text>
+        <Text className="text-sm text-gray-500 text-center italic">
+        Customer should scan this QR code with their payment app
+        </Text>
         </VStack>
 
-        {/* Action Buttons */}
-        <VStack space="md">
+        {/* Action Buttons side by side */}
+        <HStack space="md" className="w-full mb-6">
           <Button 
-            className="w-full" 
-            onPress={handlePaymentSuccess}
-            action="positive"
+        className="flex-1 h-[52px] rounded-lg bg-black"
+        onPress={handlePaymentSuccess}
+        action="positive"
           >
-            <ButtonText>Payment Successful</ButtonText>
+        <ButtonText className='text-white'>PAYMENT SUCCESSFULL</ButtonText>
           </Button>
           
           <Button 
-            className="w-full" 
-            onPress={handlePaymentFailure}
-            action="negative"
-            variant="outline"
+        className="flex-1 h-[52px] rounded-lg bg-black"
+        onPress={handlePaymentFailure}
+        action="negative"
+        variant="outline"
           >
-            <ButtonText>Payment Failed</ButtonText>
+        <ButtonText className='text-white'>PAYMENT FAILED</ButtonText>
           </Button>
-        </VStack>
+        </HStack>
       </VStack>
     </SafeAreaView>
   );
