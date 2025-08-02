@@ -87,17 +87,6 @@ const LoginWithLeftBackground = () => {
       // Navigate to the merchant tab
       router.replace("/(tabs)/(merchant)");
 
-      // Show success message
-      toast.show({
-        placement: "bottom right",
-        render: ({ id }: any) => {
-          return (
-            <Toast nativeID={id} variant="solid" action="success">
-              <ToastTitle>Login successful!</ToastTitle>
-            </Toast>
-          );
-        },
-      });
 
     } catch (err) {
       console.error("An error occurred during login:", err); // Log the full error for debugging
